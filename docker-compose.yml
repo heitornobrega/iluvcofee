@@ -1,0 +1,38 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: yourdatabase
+      POSTGRES_USER: youruser
+      POSTGRES_PASSWORD: yourpassword
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: your@email.com
+      PGADMIN_DEFAULT_PASSWORD: yourpassword
+    ports:
+      - '8080:80'
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+  tes-database:
+    image: your-custom-image:tag
+    environment:
+      TES_DB_NAME: yourtesdatabase
+      TES_DB_USER: yourtesuser
+      TES_DB_PASSWORD: yourtespassword
+    ports:
+      - '5433:5432'
+    volumes:
+      - tes-data:/var/lib/tesdata
+volumes:
+  postgres-data:
+  pgadmin-data:
+  tes-data:
